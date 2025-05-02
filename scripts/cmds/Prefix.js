@@ -93,7 +93,7 @@ module.exports = {
 
     onChat: async function ({ event, message }) {
         if (event.body && event.body.toLowerCase() === "prefix") {
-            const prefixMessage = `🌎 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱: \`${global.GoatBot.config.prefix}\`
+            const prefixMessage = `🌎 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱: \( ${global.GoatBot.config.prefix}\ )
 📚 𝐘𝐨𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 𝐏𝐫𝐞𝐟𝐢𝐱: \( ${utils.getPrefix(event.threadID)}\ ) 
 
 ╭‣ 𝐀𝐝𝐦𝐢𝐧 👑  
