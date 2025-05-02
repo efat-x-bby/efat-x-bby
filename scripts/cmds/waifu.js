@@ -1,60 +1,45 @@
 const axios = require('axios');
 
 module.exports = {
-	config: {
-		name: "waifu",
-		aliases: ["wife"],
-		version: "1.0",
-		author: "tas3n",
-		countDown: 6,
-		role: 0,
-		shortDescription: "get random waifu",
-		longDescription: "Get waifu neko: waifu, neko, shinobu, megumin, bully, cuddle, cry, kiss, lick, hug, awoo, pat, smug, bonk, yeet, blush, smile, wave, highfive, handhold, nom, bite, glomp, slap, kill, kick, happy, wink, poke, dance, cringe",
-		category: "anime",
-		guide: "{pn} {{<name>}}"
-	},
+  config: {
+    name: "hub",
+    aliases: ["nsfw"],
+    version: "1.0",
+    author: "Efat",
+    countDown: 5,
+    role: 0,
+    shortDescription: "get random waifu",
+    longDescription: "Get waifu",
+    category: "anime",
+    guide: "{pn} {{<name>}}"
+  },
 
-	onStart: async function ({ message, args }) {
-		const name = args.join(" ");
-		if (!name)
+  onStart: async function ({ message, args }) {
+   
+    const name = args.join(" ") || "waifu"; // 
+    try {
+      // Construct the API URL using the provided or default category
+      let res = await axios.get(`https://api.waifu.pics/nsfw/${name}`);
+      let res2 = res.data;
+      let img = res2.url;
 
-			try {
-				let res = await axios.get(`https://api.waifu.pics/sfw/waifu`)
+      
+      const form = {
+        body: `   「 waifu😘  」   ` // Custom message
+      };
 
-
-				let res2 = res.data
-				let img = res2.url
-
-				const form = {
-					body: `   「 𝔀𝓪𝓲𝓯𝓾  」   `
-
-				};
-				if (img)
-					form.attachment = await global.utils.getStreamFromURL(img);
-				message.reply(form);
-			} catch (e) {
-				message.reply(` Not Found`)
-			}
-
-
-		else {
-
-			try {
-				let res = await axios.get(`https://api.waifu.pics/sfw/${name}`)
-
-
-				let res2 = res.data
-				let img1 = res2.url
-
-				const form = {
-					body: `   「 𝔀𝓪𝓲𝓯𝓾  」   `
-
-				};
-				if (img1)
-					form.attachment = await global.utils.getStreamFromURL(img1);
-				message.reply(form);
-			} catch (e) { message.reply(` No waifu  \category: waifu, neko, shinobu, megumin, bully, cuddle, cry, kiss, lick, hug, awoo, pat, smug, bonk, yeet, blush, smile, wave, highfive, handhold, nom, bite, glomp, slap, kill, kick, happy, wink, poke, dance, cringe `) }
-
-		}
-	}
+    
+      if (img) {
+        form.attachment = await global.utils.getStreamFromURL(img);
+        message.reply(form);
+      } else {
+        // If no image is found in the response
+        message.reply("❌ No waifu image found for this category.");
+      }
+    } catch (e) {
+      // Error handling if the API call fails
+      console.error(e);
+      message.reply(`❌ Error: No waifu found for category "${name}"., fuck`);
+    }
+  }
 };
