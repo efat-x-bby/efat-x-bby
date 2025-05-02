@@ -1,66 +1,59 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+const moment = require('moment-timezone');
 
 module.exports = {
-config: {
-  name: "owner",
-  aurthor:"Tokodori",// Convert By Goatbot Tokodori 
-   role: 0,
-  shortDescription: " ",
-  longDescription: "",
-  category: "admin",
-  guide: "{pn}"
-},
+    config: {
+        name: "intro",
+        version: "1.0",
+        author: "efat",
+        countDown: 5,
+        role: 1, // Only admins can use this
+        shortDescription: "Show admin info",
+        longDescription: "Displays detailed information about the admin",
+        category: "admin",
+        guide: "{p}adminintro"
+    },
 
-  onStart: async function ({ api, event }) {
-  try {
-    const ownerInfo = {
-      name: '𝐓 𝐀 𝐍 𝐉 𝐈 𝐋',
-      gender: '𝐌𝐚𝐥𝐞',
-      age: '𝟏𝟖±',
-      height: '5.11',
-      choise: 'Russian 😞',
-      nick: '𝐉𝐚𝐦𝐚𝐢 𝐛𝐨𝐥𝐛𝐢  '
-    };
+    onStart: async function ({ message }) {
+        const adminInfo = {
+            name: "𝐄𝐟𝐚𝐭",
+            username: "𝕯𝖆𝖗𝖈𝖐 𝖈𝖔𝖑",
+            address: "𝐃𝐡𝐚𝐤𝐚",
+            age: "𝟏𝟔+",
+            height: "6 ft",
+            weight: "5𝟕 kg",
+            badHabits: "𝐒𝐦𝐨𝐤𝐢𝐧𝐠 🚭",
+            status: "𝐎𝐧𝐞 𝐬𝐢𝐝𝐞 𝐥𝐨𝐯𝐞𝐫",
+            work: "Sᴛᴜᴅʏ",
+            religion: "Isʟᴀᴍ",
+            fbLink: "https://m.me/Efuu.chen"
+        };
 
-    const bold = 'https://i.imgur.com/v9A1DLB.mp4'; // Replace with your Google Drive videoid link https://drive.google.com/uc?export=download&id=here put your video id
+        const now = moment().tz('Asia/Dhaka').format('MMMM Do YYYY, h:mm:ss A');
 
-    const tmpFolderPath = path.join(__dirname, 'tmp');
+        const response = `
+━━━━━━━━━━━━━━━━━━━
+✨🙆‍♂️ 𝗔𝗗𝗠𝗜𝗡 𝗜𝗡𝗙𝗢 🙅‍♂️✨
+━━━━━━━━━━━━━━━━━━━
+👤 𝗡𝗮𝗺𝗲: ${adminInfo.name}
+🆔 𝗨𝘀𝗲𝗿𝗻𝗮𝗺𝗲: ${adminInfo.username}
+📍 𝗔𝗱𝗱𝗿𝗲𝘀𝘀: ${adminInfo.address}
+━━━━━━━━━━━━━━━━━━━
+🎂 𝗔𝗴𝗲: ${adminInfo.age}
+📏 𝗛𝗲𝗶𝗴𝗵𝘁: ${adminInfo.height}
+⚖️ 𝗪𝗲𝗶𝗴𝗵𝘁: ${adminInfo.weight}
+━━━━━━━━━━━━━━━━━━━
+🚬 𝗕𝗮𝗱 𝗛𝗮𝗯𝗶𝘁𝘀: ${adminInfo.badHabits}
+💔 𝗦𝘁𝗮𝘁𝘂𝘀: ${adminInfo.status}
+📚 𝗪𝗼𝗿𝗸: ${adminInfo.work}
+🕌 𝗥𝗲𝗹𝗶𝗴𝗶𝗼𝗻: ${adminInfo.religion}
+━━━━━━━━━━━━━━━━━━━
+🌐 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸: ${adminInfo.fbLink}
+📅 𝗧𝗶𝗺𝗲: ${now}
+━━━━━━━━━━━━━━━━━━━
+✨ 🔥 "𝐒𝐮𝐜𝐜𝐞𝐬𝐬 𝐜𝐨𝐦𝐞𝐬 𝐭𝐨 𝐭𝐡𝐨𝐬𝐞 𝐰𝐡𝐨 𝐧𝐞𝐯𝐞𝐫 𝐠𝐢𝐯𝐞 𝐮𝐩!" 🔥 ✨
+━━━━━━━━━━━━━━━━━━━
+        `;
 
-    if (!fs.existsSync(tmpFolderPath)) {
-      fs.mkdirSync(tmpFolderPath);
-    }
-
-    const videoResponse = await axios.get(bold, { responseType: 'arraybuffer' });
-    const videoPath = path.join(tmpFolderPath, 'owner_video.mp4');
-
-    fs.writeFileSync(videoPath, Buffer.from(videoResponse.data, 'binary'));
-
-    const response = ` 
-╭[ .  ]•〆 ᵀᴬᴺᴶᴵᴸ 〆 ]  ─⦿
-╭────────────◊
-├‣ 𝐁𝐨𝐭 & 𝐎𝐰𝐧𝐞𝐫 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 
-├‣ 𝐍𝐚𝐦𝐞: ${ownerInfo.name}
-├‣ 𝐆𝐞𝐧𝐝𝐞𝐫:  ${ownerInfo.gender}
-├‣ 𝐀𝐠𝐞 .${ownerInfo.age}
-├‣ 𝐍𝐢𝐜𝐤 : ${ownerInfo.nick}
-├‣ 𝐂𝐡𝐨𝐢𝐬𝐞:  ${ownerInfo.choise}   
-├‣ 𝐇𝐞𝐢𝐠𝐡𝐭 : ${ownerInfo.height}
-╰────────────◊ 
-`;
-
-    await api.sendMessage({
-      body: response,
-      attachment: fs.createReadStream(videoPath)
-    }, event.threadID, event.messageID);
-
-    if (event.body.toLowerCase().includes('ownerinfo')) {
-      api.setMessageReaction('🚀', event.messageID, (err) => {}, true);
-    }
-  } catch (error) {
-    console.error('Error in ownerinfo command:', error);
-    return api.sendMessage('An error occurred while processing the command.', event.threadID);
-  }
-},
+        message.reply(response);
+    }
 };
