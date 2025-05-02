@@ -68,7 +68,6 @@ module.exports = {
 						else
 							notAdminIds.push(uid);
 					}
-
 					config.adminBot.push(...notAdminIds);
 					const getNames = await Promise.all(uids.map(uid => usersData.getName(uid).then(name => ({ uid, name }))));
 					writeFileSync(global.client.dirConfig, JSON.stringify(config, null, 2));
@@ -76,16 +75,16 @@ module.exports = {
 						(notAdminIds.length > 0 ? getLang("added", notAdminIds.length, getNames.map(({ uid, name }) => `• ${name} (${uid})`).join("\n")) : "")
 						+ (adminIds.length > 0 ? getLang("alreadyAdmin", adminIds.length, adminIds.map(uid => `• ${uid}`).join("\n")) : "")
 					);
-				}
-				else
+				} else {
 					return message.reply(getLang("missingIdAdd"));
+				}
 			}
 			case "remove":
 			case "-r": {
 				if (args[1]) {
 					let uids = [];
 					if (Object.keys(event.mentions).length > 0)
-						uids = Object.keys(event.mentions)[0];
+						uids = Object.keys(event.mentions);
 					else
 						uids = args.filter(arg => !isNaN(arg));
 					const notAdminIds = [];
@@ -104,17 +103,32 @@ module.exports = {
 						(adminIds.length > 0 ? getLang("removed", adminIds.length, getNames.map(({ uid, name }) => `• ${name} (${uid})`).join("\n")) : "")
 						+ (notAdminIds.length > 0 ? getLang("notAdmin", notAdminIds.length, notAdminIds.map(uid => `• ${uid}`).join("\n")) : "")
 					);
-				}
-				else
+				} else {
 					return message.reply(getLang("missingIdRemove"));
+				}
 			}
 			case "list":
 			case "-l": {
-				const getNames = await Promise.all(config.adminBot.map(uid => usersData.getName(uid).then(name => ({ uid, name }))));
-				const owner = `᳃•••••••••••𝐎 𝐖 𝐍 𝐄 𝐑••••••••••᳃\n\n🎀  ᯽𝐓 𝐀 𝐍 𝐉 𝐈 𝐋᯽ 🎀\n\nUid: 61564913640716\n\n--------------------------------------------\n`;
-				const operators = getNames.map(({ uid, name }) => `• ${name} (${uid})`).join("\n");
+				const maxSlots = 6;
+				const getNames = await Promise.all(config.adminBot.map(uid =>
+					usersData.getName(uid).then(name => ({ uid, name: name || "Unknown" }))
+				));
+				const ownerBlock =
+`╔═══════〔 𝐎𝐖𝐍𝐄𝐑 〕═══════╗
 
-				return message.reply(owner + (operators ? `\n          -----   Operator -----\n\n${operators}` : "\nNull..\nNull..\nNull.."));
+   🎀  ᯽ 𝐄 𝐅 𝐀 𝐓 ᯽ 🎀  
+   UID: 61572797678150
+
+╚══════════════════════╝`;
+
+				let operators = getNames.map(({ uid, name }) => `• ${name} (${uid})`);
+				while (operators.length < maxSlots) {
+					operators.push("• Unknown ()");
+				}
+
+				const operatorBlock = `\n\n         •• 𝐎𝐏𝐄𝐑𝐀𝐓𝐎𝐑𝐒 ••\n\n${operators.join("\n")}\n\n═══════════════════════`;
+
+				return message.reply(ownerBlock + operatorBlock);
 			}
 			default:
 				return message.SyntaxError();
