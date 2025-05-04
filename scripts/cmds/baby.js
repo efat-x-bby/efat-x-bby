@@ -7,7 +7,7 @@ module.exports.config = {
     name: "bby",
     aliases: ["baby", "bbe", "babe"],
     version: "6.9.0",
-    author: "dipto",
+    author: "efuu",
     countDown: 0,
     role: 0,
     description: "better then all sim simi",
@@ -159,9 +159,9 @@ module.exports.onChat = async ({
 }) => {
     try {
         const body = event.body ? event.body?.toLowerCase() : ""
-        if (body.startsWith("baby") || body.startsWith("bby") || body.startsWith("bot") || body.startsWith("jan") || body.startsWith("babu") || body.startsWith("janu")) {
+        if (body.startsWith("makima") || body.startsWith("maki ma") || body.startsWith("bot") || body.startsWith("bby") || body.startsWith("babu") || body.startsWith("maki")) {
             const arr = body.replace(/^\S+\s*/, "")
-            const randomReplies = ["😚", "Yes 😀, I am here", "What's up?", "Bolo jaan ki korte panmr jonno"];
+            const randomReplies = ["ekta BF khuje dau 😿", "dekha hole kath golap dioo..🤗", "Kotha daw amk potaiba...!!😌", "xunaaa khuda lagse🥺"];
             if (!arr) {
 
                 await api.sendMessage(randomReplies[Math.floor(Math.random() * randomReplies.length)], event.threadID, (error, info) => {
