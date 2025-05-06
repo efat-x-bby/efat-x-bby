@@ -1,8 +1,8 @@
 module.exports = {
   config: {
-    name: "pending",
+    name: "p",
     version: "1.0",
-    author: "ArYan 🐔",
+    author: "efat",
     countDown: 5,
     role: 2,
     shortDescription: {
@@ -13,7 +13,7 @@ module.exports = {
       vi: "",
       en: ""
     },
-    category: "ArYan"
+    category: "efat"
   },
 
 langs: {
@@ -54,8 +54,8 @@ onReply: async function({ api, event, Reply, getLang, commandName, prefix }) {
 ╰──────────────⭓
 ╭──────────────⭓
 │➜ 𝐎𝐭𝐡𝐞𝐫 𝐃𝐞𝐭𝐚𝐢𝐥𝐬⚠️
-│Owner : 𝐓 𝐀 𝐍 𝐉 𝐈 𝐋
-│FB : Ťåñjïł Hāšāń Æßp 
+│Owner : 𝙀𝙁𝘼𝙏
+│FB : 𝙴𝙵𝚄𝚄 𝙲𝙷𝙴𝙽
 ╰──────────────⭓`, Reply.pending[ArYanIndex - 1].threadID);
             count+=1;
         }
